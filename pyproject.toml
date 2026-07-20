@@ -19,3 +19,4 @@ include = ["loop_engineering*", "experiments*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+pythonpath = ["."]
