@@ -1,0 +1,19 @@
+name: Feature request
+description: Propose a focused learning or experiment improvement
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Learning problem
+      description: What concept or workflow would this make easier to study?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: Describe the smallest useful change and how it could be tested.
+    validations:
+      required: true

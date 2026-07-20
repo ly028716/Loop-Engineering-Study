@@ -1,70 +1,45 @@
 # Loop Engineering Study
 
-This is an independent study project for Loop Engineering: designing observable,
-repeatable improvement loops around a changing state and an explicit goal.
-It is intentionally separate from any agent platform or production harness.
-The baseline is deterministic and local-only: no API key, database, model
-service, or web framework is required.
+> An executable learning laboratory for Loop Engineering.
 
-## Core loop
+Loop Engineering Study is an independent, local-first Python project for
+studying how observable, repeatable improvement loops are designed and
+evaluated. It is a learning runtime and experiment collection, not an agent
+platform or production harness.
 
-`OBSERVE → DECIDE → ACT → EVALUATE → FEEDBACK`
+The baseline is deterministic and requires no API key, database, model service,
+or web framework. Each run makes the loop visible:
 
-- **OBSERVE** records the current situation.
-- **DECIDE** selects the next bounded move.
-- **ACT** applies that move.
-- **EVALUATE** checks the result against the goal.
-- **FEEDBACK** turns the evaluation into input for the next round.
+```text
+OBSERVE → DECIDE → ACT → EVALUATE → FEEDBACK → STOP
+```
 
-Every run ends with an explicit **STOP** event after a success or another
-configured stopping condition.
+## What is implemented
 
-## Install
+- A small `LoopRunner` with explicit state, policy, action, evaluator, memory,
+  metrics, and stopping-condition boundaries.
+- Structured event traces for every loop round.
+- JSON artifacts containing `events`, `final_state`, and `metrics`.
+- Deterministic success, retry, failure, and stop behavior.
+- A CLI plus three executable experiments: `basic_loop`, `retry_loop`, and
+  `repair_loop`.
+- A pytest suite covering the runtime and packaging contract.
 
-Use Python 3.11 or newer. From the project root, install the package and its
-pytest development dependency:
+The project deliberately starts with deterministic behavior. External models or
+services are future experiment inputs, not hidden dependencies of the baseline.
+
+## Quick start
+
+Requires Python 3.11 or newer:
 
 ```powershell
 python -m pip install -e ".[dev]"
-```
-
-No environment variables or credentials need to be configured.
-
-## Run your first loop
-
-Run the built-in deterministic loop from `0` to the goal `3`:
-
-```powershell
 python -m loop_engineering.cli run --goal 3 --max-steps 10 --output .loop/runs/demo.json
-```
-
-The command exits with a one-line JSON summary containing `status`, `steps`,
-`final_value`, `score`, and the absolute `trace_path`. A successful run reports
-`"status": "SUCCEEDED"` and writes the complete trace to
-`.loop/runs/demo.json`.
-
-## Inspect the trace
-
-Windows PowerShell:
-
-```powershell
 Get-Content -Raw .loop/runs/demo.json
 ```
 
-POSIX shell:
-
-```sh
-cat .loop/runs/demo.json
-```
-
-The `events` array records `OBSERVE`, `DECIDE`, `ACT`, `EVALUATE`, and
-`FEEDBACK` for each round, followed by `STOP`. The same file also contains the
-final state, so the run can be reviewed without rerunning it.
-
-## Run the experiments
-
-Three direct scripts demonstrate a stable loop, feedback-driven retry, and a
-faulty evaluation:
+The CLI prints a JSON summary and writes a complete replayable artifact. Run the
+three learning experiments in order:
 
 ```powershell
 python experiments/basic_loop.py
@@ -72,17 +47,37 @@ python experiments/retry_loop.py
 python experiments/repair_loop.py
 ```
 
-Read [docs/experiments.md](docs/experiments.md) for the expected observations
-and recommended order.
+## Learning path
 
-## Learning order
+Start with the conceptual model, then inspect one complete loop, feedback,
+memory, convergence, and stopping behavior:
 
-Follow the path from the loop concepts to a single deterministic round, then add
-feedback, memory, convergence, and engineering cases. The detailed sequence is
-in [docs/learning-path.md](docs/learning-path.md), with the current vocabulary in
-[docs/concepts.md](docs/concepts.md).
+1. [Loop concepts](docs/concepts.md)
+2. [Learning path](docs/learning-path.md)
+3. [Experiments](docs/experiments.md)
+4. [Architecture](docs/architecture.md)
+5. [Metrics](docs/metrics.md)
+6. [Replayable artifacts](docs/replay.md)
+7. [Theory notes](theory/)
 
-The local baseline keeps policy, action, evaluator, memory, and stopping
-conditions separate. A next experiment can replace one of those components
-while preserving the same trace contract; external models should only be added
-after the deterministic behavior is understood and tested.
+## Development
+
+```powershell
+python -m pytest -q
+python -m build --wheel
+```
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request. CI runs
+the same test and wheel-build checks on supported Python versions.
+
+## Scope
+
+This repository is intentionally an independent study of loop engineering. It
+does not claim to be a general-purpose autonomous-agent framework, an LLM
+orchestration system, or a production reliability solution. New capabilities
+should preserve observable traces, deterministic tests where possible, and
+explicit stopping conditions.
+
+## License
+
+Released under the [MIT License](LICENSE).
