@@ -9,3 +9,4 @@
 - Task 7: complete after direct-script fix (spec review clean; 34 tests passed; six experiment entry tests passed)
 - Task 8: complete (project contract and documentation verification; 37 tests passed; CLI and experiment smoke passed)
 - Final fixes: complete (package discovery and artifact persistence fixed; 41 tests passed; clean wheel/install and artifact round-trip passed; Git metadata remains blocked by workspace permissions)
+- Phase 2 feedback strategy comparison: complete (fixed, error-aware, and memory-aware strategies implemented; 44 tests passed; direct comparison experiment and three replayable artifacts verified)

@@ -55,10 +55,11 @@ memory, convergence, and stopping behavior:
 1. [Loop concepts](docs/concepts.md)
 2. [Learning path](docs/learning-path.md)
 3. [Experiments](docs/experiments.md)
-4. [Architecture](docs/architecture.md)
-5. [Metrics](docs/metrics.md)
-6. [Replayable artifacts](docs/replay.md)
-7. [Theory notes](theory/)
+4. [Feedback strategy comparison](docs/feedback-strategies.md)
+5. [Architecture](docs/architecture.md)
+6. [Metrics](docs/metrics.md)
+7. [Replayable artifacts](docs/replay.md)
+8. [Theory notes](theory/)
 
 ## Development
 

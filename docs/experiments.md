@@ -1,24 +1,34 @@
 # Experiments
 
-这些实验完全在本地运行，只使用项目的标准库依赖和已有的 loop-engineering
-组件。请从仓库根目录按以下顺序运行：
+所有实验都在本地运行，只依赖项目代码和 Python 标准库。建议按以下顺序进行：
 
 ```powershell
 python experiments/basic_loop.py
 python experiments/retry_loop.py
 python experiments/repair_loop.py
+python experiments/feedback_strategies.py
 ```
 
-若环境没有将 Python 加入 `PATH`，请将 `python` 替换为 bundled Python 的完整
-路径。每个命令都会打印轮数、最终状态、最终分数、停止原因、每轮得分序列，以及
-绝对 `artifact_path`。3 个 artifact 分别写入 `.loop/runs/basic_loop.json`、
-`.loop/runs/retry_loop.json` 和 `.loop/runs/repair_loop.json`，均可通过
-`loop_engineering.artifacts.load_run_artifact()` 恢复轨迹与完整指标。
+## 基础实验
 
-1. `basic_loop`：先建立正常、稳定的目标逼近基线。
-2. `retry_loop`：再观察一次确定性动作失败如何通过反馈改变下一轮增量。
-3. `repair_loop`：最后观察“动作成功/状态达到目标”与“评估报告成功”并不等价。
+`basic_loop.py` 展示一个稳定的目标逼近循环：策略每轮增加固定值，直到达到目标。
 
-可结合 [模型](../theory/loop-models.md)、[反馈](../theory/feedback-systems.md)、
-[状态与记忆](../theory/state-and-memory.md)、[收敛](../theory/convergence.md) 和
-[停止条件](../theory/stopping-conditions.md) 阅读。
+## 重试实验
+
+`retry_loop.py` 注入一次动作失败。评估器将失败转换为
+`retry_required` 反馈，策略读取该反馈后选择更大的下一步动作。
+
+## 修复实验
+
+`repair_loop.py` 展示动作结果和评估报告不一致的情况：状态可能已经达到目标，
+但评估器仍然报告失败。这个实验提醒我们不能只看最终值，必须同时检查评估器和
+停止条件。
+
+## 反馈策略对比
+
+`feedback_strategies.py` 使用统一配置比较 `fixed`、`error_aware` 和 `memory_aware`
+三种策略。详细问题、指标和 Artifact 查看方式见
+[feedback-strategies.md](feedback-strategies.md)。
+
+每个脚本都会输出摘要，并将完整 Trace 写入 `.loop/runs/`。运行产物可以通过
+`loop_engineering.artifacts.load_run_artifact()` 加载。
