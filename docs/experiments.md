@@ -7,6 +7,7 @@ python experiments/basic_loop.py
 python experiments/retry_loop.py
 python experiments/repair_loop.py
 python experiments/feedback_strategies.py
+python experiments/memory_capacity.py
 ```
 
 ## 基础实验
@@ -27,8 +28,13 @@ python experiments/feedback_strategies.py
 ## 反馈策略对比
 
 `feedback_strategies.py` 使用统一配置比较 `fixed`、`error_aware` 和 `memory_aware`
-三种策略。详细问题、指标和 Artifact 查看方式见
-[feedback-strategies.md](feedback-strategies.md)。
+三种策略。详细说明见 [feedback-strategies.md](feedback-strategies.md)。
+
+## 记忆容量对比
+
+`memory_capacity.py` 使用同一个失败计划比较 `no_memory`、`short_memory`、
+`working_memory` 和 `long_window`。详细说明见
+[memory-capacity.md](memory-capacity.md)。
 
 每个脚本都会输出摘要，并将完整 Trace 写入 `.loop/runs/`。运行产物可以通过
 `loop_engineering.artifacts.load_run_artifact()` 加载。

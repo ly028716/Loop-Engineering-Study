@@ -53,10 +53,11 @@ python experiments/repair_loop.py
 2. [学习路径](docs/learning-path.md)
 3. [实验说明](docs/experiments.md)
 4. [反馈策略对比实验](docs/feedback-strategies.md)
-5. [系统架构](docs/architecture.md)
-6. [指标定义](docs/metrics.md)
-7. [可回放 Artifact](docs/replay.md)
-8. [理论笔记](theory/)
+5. [记忆容量对比实验](docs/memory-capacity.md)
+6. [系统架构](docs/architecture.md)
+7. [指标定义](docs/metrics.md)
+8. [可回放 Artifact](docs/replay.md)
+9. [理论笔记](theory/)
 
 ## 开发
 
