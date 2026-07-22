@@ -1,8 +1,8 @@
 import pytest
 
 from loop_engineering.evaluators import Evaluation
-from loop_engineering.models import LoopState
-from loop_engineering.stopping import MaxSteps, SuccessReached
+from loop_engineering.models import LoopEvent, LoopState
+from loop_engineering.stopping import MaxSteps, NoProgress, SuccessReached
 
 
 def evaluation(*, success: bool) -> Evaluation:
@@ -47,3 +47,41 @@ def test_max_steps_stops_at_the_configured_step_limit() -> None:
 def test_max_steps_rejects_non_positive_limits() -> None:
     with pytest.raises(ValueError, match="max_steps must be at least 1"):
         MaxSteps(0)
+
+
+def test_no_progress_rejects_invalid_configuration() -> None:
+    with pytest.raises(ValueError, match="window must be at least 1"):
+        NoProgress(window=0)
+    with pytest.raises(ValueError, match="min_score_gain cannot be negative"):
+        NoProgress(window=2, min_score_gain=-0.1)
+
+
+def test_no_progress_waits_for_window_and_stops_on_flat_scores() -> None:
+    condition = NoProgress(window=3)
+    history = [
+        LoopEvent(step=1, phase="EVALUATE", payload={"score": 0.5}),
+        LoopEvent(step=2, phase="EVALUATE", payload={"score": 0.5}),
+        LoopEvent(step=3, phase="EVALUATE", payload={"score": 0.5}),
+    ]
+
+    decision = condition.should_stop(
+        LoopState(step=3, value=0.0, goal=1.0), evaluation(success=False), history
+    )
+
+    assert decision.stop is True
+    assert decision.reason == "No progress for 3 evaluations"
+
+
+def test_no_progress_continues_when_score_improves() -> None:
+    condition = NoProgress(window=3)
+    history = [
+        LoopEvent(step=1, phase="EVALUATE", payload={"score": 0.2}),
+        LoopEvent(step=2, phase="EVALUATE", payload={"score": 0.4}),
+        LoopEvent(step=3, phase="EVALUATE", payload={"score": 0.5}),
+    ]
+
+    decision = condition.should_stop(
+        LoopState(step=3, value=2.0, goal=3.0), evaluation(success=False), history
+    )
+
+    assert decision.stop is False

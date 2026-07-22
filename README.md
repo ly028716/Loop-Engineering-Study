@@ -57,10 +57,11 @@ memory, convergence, and stopping behavior:
 3. [Experiments](docs/experiments.md)
 4. [Feedback strategy comparison](docs/feedback-strategies.md)
 5. [Memory capacity comparison](docs/memory-capacity.md)
-6. [Architecture](docs/architecture.md)
-7. [Metrics](docs/metrics.md)
-8. [Replayable artifacts](docs/replay.md)
-9. [Theory notes](theory/)
+6. [Convergence and stopping](docs/convergence-stopping.md)
+7. [Architecture](docs/architecture.md)
+8. [Metrics](docs/metrics.md)
+9. [Replayable artifacts](docs/replay.md)
+10. [Theory notes](theory/)
 
 ## Development
 

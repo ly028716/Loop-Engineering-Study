@@ -71,3 +71,47 @@ class MaxSteps(StopCondition):
                 reason=f"Reached maximum steps: {self.max_steps}",
             )
         return StopDecision(stop=False, status="RUNNING", reason="")
+
+
+class NoProgress(StopCondition):
+    """Stops when recent evaluation scores fail to improve."""
+
+    def __init__(self, window: int, min_score_gain: float = 0.0) -> None:
+        if window < 1:
+            raise ValueError("window must be at least 1")
+        if min_score_gain < 0.0:
+            raise ValueError("min_score_gain cannot be negative")
+        self.window = window
+        self.min_score_gain = min_score_gain
+
+    def should_stop(
+        self,
+        state: LoopState,
+        evaluation: Evaluation,
+        history: Sequence[LoopEvent],
+    ) -> StopDecision:
+        del state, evaluation
+        scores: list[float] = []
+        for event in history:
+            if event.phase != "EVALUATE" or "score" not in event.payload:
+                continue
+            try:
+                scores.append(float(event.payload["score"]))
+            except (TypeError, ValueError):
+                continue
+
+        if len(scores) < self.window:
+            return StopDecision(stop=False, status="RUNNING", reason="")
+
+        recent_scores = scores[-self.window :]
+        gains = [
+            current - previous
+            for previous, current in zip(recent_scores, recent_scores[1:])
+        ]
+        if all(gain <= self.min_score_gain for gain in gains):
+            return StopDecision(
+                stop=True,
+                status="STOPPED",
+                reason=f"No progress for {self.window} evaluations",
+            )
+        return StopDecision(stop=False, status="RUNNING", reason="")
