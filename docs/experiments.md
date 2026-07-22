@@ -9,6 +9,7 @@ python experiments/repair_loop.py
 python experiments/feedback_strategies.py
 python experiments/memory_capacity.py
 python experiments/convergence_stopping.py
+python experiments/failure_modes.py
 ```
 
 ## 基础实验
@@ -41,6 +42,11 @@ python experiments/convergence_stopping.py
 `convergence_stopping.py` 比较收敛、停滞和振荡三种模式，观察
 `SuccessReached`、`NoProgress` 和 `MaxSteps` 的不同职责。详细说明见
 [convergence-stopping.md](convergence-stopping.md)。
+
+## 失败模式与恢复
+
+`failure_modes.py` 统一比较动作失败、评估器冲突、反馈缺失、振荡和安全上限五种
+场景。详细说明见 [failure-modes.md](failure-modes.md)。
 
 每个脚本都会输出摘要，并将完整 Trace 写入 `.loop/runs/`。运行产物可以通过
 `loop_engineering.artifacts.load_run_artifact()` 加载。
