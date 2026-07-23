@@ -15,6 +15,7 @@ python experiments/benchmark_suite.py
 python experiments/sensitivity_analysis.py
 python experiments/trace_diagnostics.py
 python experiments/diagnosis_repair_loop.py
+python experiments/regression_gate.py
 ```
 
 ## 基础实验
@@ -74,6 +75,10 @@ python experiments/diagnosis_repair_loop.py
 ## 诊断驱动修复闭环
 
 `diagnosis_repair_loop.py` 对三个基线问题执行诊断、确定性修复与真实重跑验证。详细说明见 [diagnosis-repair-loop.md](diagnosis-repair-loop.md)。
+
+## 回归门禁
+
+`regression_gate.py` 汇总 benchmark、敏感性、诊断和修复闭环的语义契约，防止关键学习能力退化。详细说明见 [regression-gate.md](regression-gate.md)。
 
 每个脚本都会输出摘要，并将完整 Trace 写入 `.loop/runs/`。运行产物可以通过
 `loop_engineering.artifacts.load_run_artifact()` 加载。

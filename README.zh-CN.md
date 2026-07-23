@@ -61,10 +61,11 @@ python experiments/repair_loop.py
 10. [参数敏感性分析](docs/sensitivity-analysis.md)
 11. [Trace 诊断](docs/trace-diagnostics.md)
 12. [诊断驱动修复闭环](docs/diagnosis-repair-loop.md)
-13. [系统架构](docs/architecture.md)
-14. [指标定义](docs/metrics.md)
-15. [可回放 Artifact](docs/replay.md)
-16. [理论笔记](theory/)
+13. [语义回归门禁](docs/regression-gate.md)
+14. [系统架构](docs/architecture.md)
+15. [指标定义](docs/metrics.md)
+16. [可回放 Artifact](docs/replay.md)
+17. [理论笔记](theory/)
 
 ## 开发
 
