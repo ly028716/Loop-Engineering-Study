@@ -56,10 +56,11 @@ python experiments/repair_loop.py
 5. [记忆容量对比实验](docs/memory-capacity.md)
 6. [收敛与停止条件](docs/convergence-stopping.md)
 7. [失败模式与恢复策略](docs/failure-modes.md)
-8. [系统架构](docs/architecture.md)
-9. [指标定义](docs/metrics.md)
-10. [可回放 Artifact](docs/replay.md)
-11. [理论笔记](theory/)
+8. [自适应策略与预算分配](docs/adaptive-strategy.md)
+9. [系统架构](docs/architecture.md)
+10. [指标定义](docs/metrics.md)
+11. [可回放 Artifact](docs/replay.md)
+12. [理论笔记](theory/)
 
 ## 开发
 

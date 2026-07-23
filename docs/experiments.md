@@ -10,6 +10,7 @@ python experiments/feedback_strategies.py
 python experiments/memory_capacity.py
 python experiments/convergence_stopping.py
 python experiments/failure_modes.py
+python experiments/adaptive_strategy.py
 ```
 
 ## 基础实验
@@ -47,6 +48,12 @@ python experiments/failure_modes.py
 
 `failure_modes.py` 统一比较动作失败、评估器冲突、反馈缺失、振荡和安全上限五种
 场景。详细说明见 [failure-modes.md](failure-modes.md)。
+
+## 自适应策略与预算分配
+
+`adaptive_strategy.py` 在同一确定性失败和安全预算下比较 `fixed`、`error_aware`、
+`memory_aware` 与 `adaptive` 四种策略。详细说明见
+[adaptive-strategy.md](adaptive-strategy.md)。
 
 每个脚本都会输出摘要，并将完整 Trace 写入 `.loop/runs/`。运行产物可以通过
 `loop_engineering.artifacts.load_run_artifact()` 加载。
