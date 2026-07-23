@@ -63,10 +63,11 @@ memory, convergence, and stopping behavior:
 9. [Benchmark suite and ranking](docs/benchmark-suite.md)
 10. [Parameter sensitivity analysis](docs/sensitivity-analysis.md)
 11. [Trace diagnostics](docs/trace-diagnostics.md)
-12. [Architecture](docs/architecture.md)
-13. [Metrics](docs/metrics.md)
-14. [Replayable artifacts](docs/replay.md)
-15. [Theory notes](theory/)
+12. [Diagnosis-driven repair loop](docs/diagnosis-repair-loop.md)
+13. [Architecture](docs/architecture.md)
+14. [Metrics](docs/metrics.md)
+15. [Replayable artifacts](docs/replay.md)
+16. [Theory notes](theory/)
 
 ## Development
 
