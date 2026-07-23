@@ -38,7 +38,7 @@ def diagnose_trace(
 | `budget_exhausted` | `STOP.reason` 为最大步数且最终状态未成功 | `error` | 最终 `STOP` 事件 | 调整预算、动作幅度或提前终止策略。 |
 | `recovery_observed` | 失败动作之后出现 `DECIDE.parameters.mode_code == 3.0` | `info` | 失败 `ACT` 与对应恢复 `DECIDE` 事件 | 比较恢复后的完成率和额外步数。 |
 
-“状态值”使用相邻 `ACT` 事件的 `state_before.value` 与结果状态值（或现有 ACT payload 中等价字段）比较；实现必须只使用当前 Trace 已持久化的数据。若某个 Trace 不触发规则，诊断器返回空列表而不是生成虚构的诊断结果。
+“状态值”使用某个 `ACT` 事件之前 `OBSERVE.payload.value` 与其后下一次 `OBSERVE.payload.value` 比较；若该动作位于 Trace 的最后一轮，则使用 `trace.final_state.value` 作为结果值。实现必须只使用当前 Trace 已持久化的数据。若某个 Trace 不触发规则，诊断器返回空列表而不是生成虚构的诊断结果。
 
 ## 实验与报告
 
