@@ -4,7 +4,7 @@
 
 **Goal:** Add a deterministic adaptive-policy experiment that reaches its goal in fewer steps than a fixed policy while recovering from an injected action failure.
 
-**Architecture:** Keep the experiment self-contained in `experiments/adaptive_strategy.py`. Four `Policy` implementations use the existing `LoopRunner`, `LoopTrace`, `MetricReport`, and Artifact functions. The adaptive policy records its selected mode in `Decision.parameters`, making strategy switches observable through existing `DECIDE` events.
+**Architecture:** Keep the experiment self-contained in `experiments/adaptive_strategy.py`. Four `Policy` implementations use the existing `LoopRunner`, `LoopTrace`, `MetricReport`, and Artifact functions. The adaptive policy records a numeric `mode_code` in `Decision.parameters`, making strategy switches observable through existing `DECIDE` events without changing the public parameter type.
 
 **Tech Stack:** Python 3.11, project standard library code, pytest, existing `loop_engineering` package.
 
@@ -12,6 +12,7 @@
 
 - Do not add third-party dependencies.
 - Do not change the public interfaces in `loop_engineering/`.
+- Keep `Decision.parameters` numeric; use `1.0=fast`, `2.0=careful`, `3.0=recovery`, and `4.0=budget_guard` for adaptive `mode_code` values.
 - Persist one loadable Artifact per compared strategy under `.loop/runs/adaptive-strategy/`.
 - Compare `fixed`, `error_aware`, `memory_aware`, and `adaptive` on the same deterministic scenario.
 - The adaptive result must succeed in fewer steps than the fixed result and respect the configured safety budget.
@@ -72,11 +73,11 @@ def test_adaptive_trace_records_recovery_mode_after_failure(tmp_path: Path) -> N
         if event.phase == "ACT" and event.payload["success"] is False
     )
     later_modes = [
-        event.payload["parameters"].get("mode")
+        event.payload["parameters"].get("mode_code")
         for event in trace.events[failed_action_index + 1 :]
         if event.phase == "DECIDE"
     ]
-    assert "recovery" in later_modes
+    assert 3.0 in later_modes
 ```
 
 - [ ] **Step 2: Run the focused tests to verify failure**
@@ -136,16 +137,16 @@ class AdaptivePolicy(Policy):
         remaining = state.goal - state.value
         failed = feedback.signals.get("action_success") is False
         if failed:
-            mode, amount = "recovery", 1.0
+            mode_code, amount = 3.0, 1.0
         elif remaining <= 2.0:
-            mode, amount = "careful", 1.0
+            mode_code, amount = 2.0, 1.0
         elif state.step >= 6:
-            mode, amount = "budget_guard", 1.0
+            mode_code, amount = 4.0, 1.0
         else:
-            mode, amount = "fast", 4.0
+            mode_code, amount = 1.0, 4.0
         return Decision(
             name="increment",
-            parameters={"amount": _remaining_amount(state, amount), "mode": mode},
+            parameters={"amount": _remaining_amount(state, amount), "mode_code": mode_code},
         )
 ```
 
@@ -194,7 +195,7 @@ def build_experiment(strategy: str, output_dir: str | Path) -> tuple[LoopRunner,
     )
 ```
 
-In `run_comparison`, iterate in the fixed order from Task 1, save `{strategy}.json`, and include `strategy`, `status`, `success`, `steps`, `final_score`, `switch_count`, `recovery_count`, `stop_reason`, and `artifact_path`. Derive the two counts from `DECIDE` event parameter `mode`; count changes between adjacent adaptive modes for `switch_count`, and count `mode == "recovery"` for `recovery_count`.
+In `run_comparison`, iterate in the fixed order from Task 1, save `{strategy}.json`, and include `strategy`, `status`, `success`, `steps`, `final_score`, `switch_count`, `recovery_count`, `stop_reason`, and `artifact_path`. Derive the two counts from `DECIDE` event parameter `mode_code`; count changes between adjacent adaptive mode codes for `switch_count`, and count `mode_code == 3.0` for `recovery_count`.
 
 - [ ] **Step 5: Add the JSON command-line entry point**
 
