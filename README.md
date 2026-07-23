@@ -62,10 +62,11 @@ memory, convergence, and stopping behavior:
 8. [Adaptive strategy and budget allocation](docs/adaptive-strategy.md)
 9. [Benchmark suite and ranking](docs/benchmark-suite.md)
 10. [Parameter sensitivity analysis](docs/sensitivity-analysis.md)
-11. [Architecture](docs/architecture.md)
-12. [Metrics](docs/metrics.md)
-13. [Replayable artifacts](docs/replay.md)
-14. [Theory notes](theory/)
+11. [Trace diagnostics](docs/trace-diagnostics.md)
+12. [Architecture](docs/architecture.md)
+13. [Metrics](docs/metrics.md)
+14. [Replayable artifacts](docs/replay.md)
+15. [Theory notes](theory/)
 
 ## Development
 

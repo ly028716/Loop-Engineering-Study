@@ -59,10 +59,11 @@ python experiments/repair_loop.py
 8. [自适应策略与预算分配](docs/adaptive-strategy.md)
 9. [评测基准与排行榜](docs/benchmark-suite.md)
 10. [参数敏感性分析](docs/sensitivity-analysis.md)
-11. [系统架构](docs/architecture.md)
-12. [指标定义](docs/metrics.md)
-13. [可回放 Artifact](docs/replay.md)
-14. [理论笔记](theory/)
+11. [Trace 诊断](docs/trace-diagnostics.md)
+12. [系统架构](docs/architecture.md)
+13. [指标定义](docs/metrics.md)
+14. [可回放 Artifact](docs/replay.md)
+15. [理论笔记](theory/)
 
 ## 开发
 
