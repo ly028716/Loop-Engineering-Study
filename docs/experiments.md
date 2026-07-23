@@ -12,6 +12,7 @@ python experiments/convergence_stopping.py
 python experiments/failure_modes.py
 python experiments/adaptive_strategy.py
 python experiments/benchmark_suite.py
+python experiments/sensitivity_analysis.py
 ```
 
 ## 基础实验
@@ -59,6 +60,10 @@ python experiments/benchmark_suite.py
 ## 评测基准与排行榜
 
 `benchmark_suite.py` 在 5 个确定性场景中比较 4 种策略，输出场景明细、评分汇总和稳定排序的排行榜。详细说明见 [benchmark-suite.md](benchmark-suite.md)。
+
+## 参数敏感性分析
+
+`sensitivity_analysis.py` 对目标距离、失败发生时机和步数预算执行单参数扫描，比较相邻档位上的策略相对顺序，并报告首次排名翻转。详细说明见 [sensitivity-analysis.md](sensitivity-analysis.md)。
 
 每个脚本都会输出摘要，并将完整 Trace 写入 `.loop/runs/`。运行产物可以通过
 `loop_engineering.artifacts.load_run_artifact()` 加载。
