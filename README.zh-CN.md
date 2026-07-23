@@ -58,10 +58,11 @@ python experiments/repair_loop.py
 7. [失败模式与恢复策略](docs/failure-modes.md)
 8. [自适应策略与预算分配](docs/adaptive-strategy.md)
 9. [评测基准与排行榜](docs/benchmark-suite.md)
-10. [系统架构](docs/architecture.md)
-11. [指标定义](docs/metrics.md)
-12. [可回放 Artifact](docs/replay.md)
-13. [理论笔记](theory/)
+10. [参数敏感性分析](docs/sensitivity-analysis.md)
+11. [系统架构](docs/architecture.md)
+12. [指标定义](docs/metrics.md)
+13. [可回放 Artifact](docs/replay.md)
+14. [理论笔记](theory/)
 
 ## 开发
 
