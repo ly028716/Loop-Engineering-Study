@@ -14,6 +14,7 @@ python experiments/adaptive_strategy.py
 python experiments/benchmark_suite.py
 python experiments/sensitivity_analysis.py
 python experiments/trace_diagnostics.py
+python experiments/diagnosis_repair_loop.py
 ```
 
 ## 基础实验
@@ -69,6 +70,10 @@ python experiments/trace_diagnostics.py
 ## Trace 诊断
 
 `trace_diagnostics.py` 从可回放 Trace 中识别动作失败、进展停滞、预算耗尽和恢复决策，并保存独立的结构化诊断报告。详细说明见 [trace-diagnostics.md](trace-diagnostics.md)。
+
+## 诊断驱动修复闭环
+
+`diagnosis_repair_loop.py` 对三个基线问题执行诊断、确定性修复与真实重跑验证。详细说明见 [diagnosis-repair-loop.md](diagnosis-repair-loop.md)。
 
 每个脚本都会输出摘要，并将完整 Trace 写入 `.loop/runs/`。运行产物可以通过
 `loop_engineering.artifacts.load_run_artifact()` 加载。

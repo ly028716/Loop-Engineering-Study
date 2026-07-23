@@ -17,3 +17,4 @@
 - Phase 2 benchmark suite: complete (five deterministic scenarios, four-policy ranking, weighted scoring, 57 passing tests, and 20 replayable artifacts verified)
 - Phase 2 sensitivity analysis: complete (three single-parameter families, nine isolated configurations, 36 replayable Artifacts, adjacent-rank flip analysis, and 59 passing tests verified)
 - Phase 2 Trace diagnostics: complete (four deterministic cases, four replayable Artifacts, four structured reports, four Trace-only diagnostic rules, and 62 passing tests verified)
+- Phase 2 diagnosis-driven repair loop: complete (three deterministic repairs, six replayable Artifacts, three reports, and 64 passing tests verified)
