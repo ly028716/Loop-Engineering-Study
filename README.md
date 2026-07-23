@@ -60,10 +60,11 @@ memory, convergence, and stopping behavior:
 6. [Convergence and stopping](docs/convergence-stopping.md)
 7. [Failure modes and recovery](docs/failure-modes.md)
 8. [Adaptive strategy and budget allocation](docs/adaptive-strategy.md)
-9. [Architecture](docs/architecture.md)
-10. [Metrics](docs/metrics.md)
-11. [Replayable artifacts](docs/replay.md)
-12. [Theory notes](theory/)
+9. [Benchmark suite and ranking](docs/benchmark-suite.md)
+10. [Architecture](docs/architecture.md)
+11. [Metrics](docs/metrics.md)
+12. [Replayable artifacts](docs/replay.md)
+13. [Theory notes](theory/)
 
 ## Development
 

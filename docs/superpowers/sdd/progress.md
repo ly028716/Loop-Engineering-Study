@@ -14,3 +14,4 @@
 - Phase 2 convergence and stopping comparison: complete (NoProgress condition and converging, stalled, oscillating modes implemented; 51 tests passed; three replayable artifacts verified)
 - Phase 2 failure modes and recovery comparison: complete (five failure scenarios, Trace-based detection, 53 passing tests, and five replayable artifacts verified)
 - Phase 2 adaptive strategy comparison: complete (fixed, error-aware, memory-aware, and adaptive strategies implemented; Trace-based numeric mode counters; 55 tests passed; four replayable artifacts verified)
+- Phase 2 benchmark suite: complete (five deterministic scenarios, four-policy ranking, weighted scoring, 57 passing tests, and 20 replayable artifacts verified)

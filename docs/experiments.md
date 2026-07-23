@@ -11,6 +11,7 @@ python experiments/memory_capacity.py
 python experiments/convergence_stopping.py
 python experiments/failure_modes.py
 python experiments/adaptive_strategy.py
+python experiments/benchmark_suite.py
 ```
 
 ## 基础实验
@@ -54,6 +55,10 @@ python experiments/adaptive_strategy.py
 `adaptive_strategy.py` 在同一确定性失败和安全预算下比较 `fixed`、`error_aware`、
 `memory_aware` 与 `adaptive` 四种策略。详细说明见
 [adaptive-strategy.md](adaptive-strategy.md)。
+
+## 评测基准与排行榜
+
+`benchmark_suite.py` 在 5 个确定性场景中比较 4 种策略，输出场景明细、评分汇总和稳定排序的排行榜。详细说明见 [benchmark-suite.md](benchmark-suite.md)。
 
 每个脚本都会输出摘要，并将完整 Trace 写入 `.loop/runs/`。运行产物可以通过
 `loop_engineering.artifacts.load_run_artifact()` 加载。
