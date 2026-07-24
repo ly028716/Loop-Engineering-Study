@@ -1,5 +1,7 @@
 # Loop Engineering Study
 
+[Artifact 回放与对比](docs/replay.md)：读取单个 Artifact 或比较任意两个 Artifact，全程不重新执行动作。
+
 [多目标评估](docs/multi-objective-evaluation.md)：通过 Pareto 前沿保留成功率、成本与完成步数之间的权衡。
 
 [随机性与鲁棒性实验](docs/stochastic-robustness.md)：以固定种子比较策略在随机扰动下的经验表现。

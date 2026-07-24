@@ -25,6 +25,18 @@ print(report.status, report.steps)
 print(len(trace.events))
 ```
 
+## Replay and compare from the CLI
+
+```powershell
+python -m loop_engineering.cli replay .loop/runs/demo.json
+python -m loop_engineering.cli compare .loop/runs/baseline.json .loop/runs/repaired.json
+```
+
+`replay` prints the complete ordered events, final state, and metrics from one
+Artifact. `compare` prints whether two Artifacts are identical and, when they
+are not, the first observable event, final-state, or metric difference. Both
+commands are read-only: they load evidence and never execute stored actions.
+
 ## What replay means here
 
 The current implementation supports inspection and deterministic restoration of
@@ -32,9 +44,10 @@ the trace and metrics. It does not re-execute actions, reproduce external side
 effects, or claim event-sourcing semantics. An artifact is evidence of a run,
 not permission to run the action again.
 
-The project now provides a read-only, first-difference comparison for paired
-Artifacts through `experiments/trace_diff_analysis.py`. See
-[Trace difference analysis](trace-diff-analysis.md) for the report semantics.
+The generic CLI `compare` command provides a read-only, first-difference
+comparison for any two compatible Artifacts. The scenario-specific
+`experiments/trace_diff_analysis.py` report applies the same semantics to
+diagnosis-repair pairs; see [Trace difference analysis](trace-diff-analysis.md).
 
 Future experiments can still grow into policy diffs or counterfactual
 evaluation, while preserving the current read-only loading behavior.
