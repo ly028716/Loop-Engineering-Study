@@ -1,5 +1,7 @@
 # Loop Engineering Study
 
+[外部 HTTP 模型适配层](docs/external-model-adapter.md)：以显式配置和严格 JSON 契约让模型生成 Decision，默认不发网络请求。
+
 [Artifact 回放与对比](docs/replay.md)：读取单个 Artifact 或比较任意两个 Artifact，全程不重新执行动作。
 
 [多目标评估](docs/multi-objective-evaluation.md)：通过 Pareto 前沿保留成功率、成本与完成步数之间的权衡。

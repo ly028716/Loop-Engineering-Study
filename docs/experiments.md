@@ -21,6 +21,7 @@ python experiments/diagnosis_repair_loop.py
 python experiments/multi_repair_selection.py
 python experiments/stochastic_robustness.py
 python experiments/trace_diff_analysis.py
+python experiments/external_model_adapter.py
 python experiments/regression_gate.py
 ```
 
