@@ -32,6 +32,9 @@ the trace and metrics. It does not re-execute actions, reproduce external side
 effects, or claim event-sourcing semantics. An artifact is evidence of a run,
 not permission to run the action again.
 
-For future experiments, replay can grow into step-by-step comparison, policy
-diffs, or counterfactual evaluation. Those features should preserve the current
-read-only loading behavior.
+The project now provides a read-only, first-difference comparison for paired
+Artifacts through `experiments/trace_diff_analysis.py`. See
+[Trace difference analysis](trace-diff-analysis.md) for the report semantics.
+
+Future experiments can still grow into policy diffs or counterfactual
+evaluation, while preserving the current read-only loading behavior.

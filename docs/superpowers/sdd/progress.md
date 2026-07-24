@@ -19,3 +19,4 @@
 - Phase 2 Trace diagnostics: complete (four deterministic cases, four replayable Artifacts, four structured reports, four Trace-only diagnostic rules, and 62 passing tests verified)
 - Phase 2 diagnosis-driven repair loop: complete (three deterministic repairs, six replayable Artifacts, three reports, and 64 passing tests verified)
 - Phase 2 semantic regression gate: complete (four semantic contracts, isolated child outputs, and 65 passing tests verified)
+- Phase 2 Trace difference analysis: complete (read-only first-difference comparison, three diagnosis-repair Artifact pairs, structured JSON report, and 73 passing tests verified)

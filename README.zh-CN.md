@@ -1,5 +1,7 @@
 # Loop Engineering Study
 
+[Trace 差异分析](docs/trace-diff-analysis.md)：对诊断修复前后的 Artifact 定位首个可观察分歧。
+
 > 一个可执行的 Loop Engineering 学习实验室。
 
 Loop Engineering Study 是一个独立、本地优先的 Python 学习项目，用于研究
