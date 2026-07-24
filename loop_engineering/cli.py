@@ -5,11 +5,12 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+from dataclasses import asdict
 from pathlib import Path
 from typing import Sequence
 
 from .actions import NumericAction
-from .artifacts import save_run_artifact
+from .artifacts import load_run_artifact, save_run_artifact
 from .evaluators import GoalEvaluator
 from .metrics import MetricReport
 from .models import LoopState, LoopTrace
@@ -27,6 +28,10 @@ def build_parser() -> argparse.ArgumentParser:
     run_parser.add_argument("--goal", type=float, required=True)
     run_parser.add_argument("--max-steps", type=int, default=20)
     run_parser.add_argument("--output", type=Path, required=True)
+    replay_parser = subparsers.add_parser(
+        "replay", help="print a complete saved artifact"
+    )
+    replay_parser.add_argument("artifact", type=Path)
     return parser
 
 
@@ -53,11 +58,28 @@ def write_trace(
     return save_run_artifact(path, trace, metrics)
 
 
+def replay_artifact(path: Path) -> dict[str, object]:
+    """Load one Artifact and return its complete JSON-ready run boundary."""
+
+    trace, metrics = load_run_artifact(path)
+    return {
+        "artifact_path": str(path.resolve()),
+        "events": [asdict(event) for event in trace.events],
+        "final_state": asdict(trace.final_state) if trace.final_state else None,
+        "metrics": asdict(metrics),
+    }
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     """Run the CLI and return a process-compatible exit code."""
 
     parser = build_parser()
     args = parser.parse_args(argv)
+
+    if args.command == "replay":
+        json.dump(replay_artifact(args.artifact), fp=sys.stdout, ensure_ascii=False)
+        sys.stdout.write("\n")
+        return 0
 
     if args.max_steps < 1:
         parser.error("--max-steps must be at least 1")

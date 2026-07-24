@@ -4,6 +4,7 @@ import sys
 from pathlib import Path
 
 from loop_engineering.artifacts import load_run_artifact
+from loop_engineering.cli import run_loop, write_trace
 from loop_engineering.metrics import MetricReport
 
 
@@ -97,3 +98,19 @@ def test_cli_run_rejects_max_steps_below_one(tmp_path: Path) -> None:
 
     assert result.returncode != 0
     assert "--max-steps must be at least 1" in result.stderr
+
+
+def test_cli_replay_prints_complete_saved_artifact(tmp_path: Path) -> None:
+    artifact_path = write_trace(tmp_path / "run.json", run_loop(2.0, 5))
+
+    result = run_cli("replay", str(artifact_path))
+
+    assert result.returncode == 0, result.stderr
+    replayed = json.loads(result.stdout)
+    persisted = json.loads(artifact_path.read_text(encoding="utf-8"))
+    assert replayed == {
+        "artifact_path": str(artifact_path.resolve()),
+        "events": persisted["events"],
+        "final_state": persisted["final_state"],
+        "metrics": persisted["metrics"],
+    }
