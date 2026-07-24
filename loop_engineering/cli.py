@@ -17,6 +17,7 @@ from .models import LoopState, LoopTrace
 from .policies import IncrementPolicy
 from .runner import LoopRunner
 from .stopping import MaxSteps, SuccessReached
+from .trace_diff import compare_traces
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -32,6 +33,11 @@ def build_parser() -> argparse.ArgumentParser:
         "replay", help="print a complete saved artifact"
     )
     replay_parser.add_argument("artifact", type=Path)
+    compare_parser = subparsers.add_parser(
+        "compare", help="compare two saved artifacts"
+    )
+    compare_parser.add_argument("left_artifact", type=Path)
+    compare_parser.add_argument("right_artifact", type=Path)
     return parser
 
 
@@ -70,6 +76,26 @@ def replay_artifact(path: Path) -> dict[str, object]:
     }
 
 
+def compare_artifacts(left_path: Path, right_path: Path) -> dict[str, object]:
+    """Return the existing first-difference comparison for two Artifacts."""
+
+    left_trace, left_metrics = load_run_artifact(left_path)
+    right_trace, right_metrics = load_run_artifact(right_path)
+    comparison = compare_traces(
+        left_trace, right_trace, left_metrics, right_metrics
+    )
+    return {
+        "left_artifact_path": str(left_path.resolve()),
+        "right_artifact_path": str(right_path.resolve()),
+        "identical": comparison.identical,
+        "difference": (
+            asdict(comparison.first_difference)
+            if comparison.first_difference is not None
+            else None
+        ),
+    }
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     """Run the CLI and return a process-compatible exit code."""
 
@@ -78,6 +104,15 @@ def main(argv: Sequence[str] | None = None) -> int:
 
     if args.command == "replay":
         json.dump(replay_artifact(args.artifact), fp=sys.stdout, ensure_ascii=False)
+        sys.stdout.write("\n")
+        return 0
+
+    if args.command == "compare":
+        json.dump(
+            compare_artifacts(args.left_artifact, args.right_artifact),
+            fp=sys.stdout,
+            ensure_ascii=False,
+        )
         sys.stdout.write("\n")
         return 0
 
