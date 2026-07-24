@@ -22,3 +22,4 @@
 - Phase 2 Trace difference analysis: complete (read-only first-difference comparison, three diagnosis-repair Artifact pairs, structured JSON report, and 73 passing tests verified)
 - Phase 2 multi-repair selection: complete (six deterministic candidate reruns across three cases, stable evidence-based ranking, and 77 passing tests verified)
 - Phase 2 stochastic robustness: complete (96 seeded stochastic runs, 12 strategy-level summaries, stable rankings, and 78 passing tests verified)
+- Phase 2 Artifact replay and comparison: complete (generic CLI replay/compare commands, complete Artifact JSON output, reused first-difference comparison, and 88 passing tests verified)

@@ -4,6 +4,7 @@ import sys
 from pathlib import Path
 
 from loop_engineering.artifacts import load_run_artifact
+from loop_engineering.cli import run_loop, write_trace
 from loop_engineering.metrics import MetricReport
 
 
@@ -97,3 +98,57 @@ def test_cli_run_rejects_max_steps_below_one(tmp_path: Path) -> None:
 
     assert result.returncode != 0
     assert "--max-steps must be at least 1" in result.stderr
+
+
+def test_cli_replay_prints_complete_saved_artifact(tmp_path: Path) -> None:
+    artifact_path = write_trace(tmp_path / "run.json", run_loop(2.0, 5))
+
+    result = run_cli("replay", str(artifact_path))
+
+    assert result.returncode == 0, result.stderr
+    replayed = json.loads(result.stdout)
+    persisted = json.loads(artifact_path.read_text(encoding="utf-8"))
+    assert replayed == {
+        "artifact_path": str(artifact_path.resolve()),
+        "events": persisted["events"],
+        "final_state": persisted["final_state"],
+        "metrics": persisted["metrics"],
+    }
+
+
+def test_cli_compare_reports_identical_for_same_artifact(tmp_path: Path) -> None:
+    artifact_path = write_trace(tmp_path / "same.json", run_loop(2.0, 5))
+
+    result = run_cli("compare", str(artifact_path), str(artifact_path))
+
+    assert result.returncode == 0, result.stderr
+    assert json.loads(result.stdout) == {
+        "left_artifact_path": str(artifact_path.resolve()),
+        "right_artifact_path": str(artifact_path.resolve()),
+        "identical": True,
+        "difference": None,
+    }
+
+
+def test_cli_compare_reports_first_difference_between_artifacts(
+    tmp_path: Path,
+) -> None:
+    left_path = write_trace(tmp_path / "left.json", run_loop(2.0, 5))
+    right_path = write_trace(tmp_path / "right.json", run_loop(3.0, 5))
+
+    result = run_cli("compare", str(left_path), str(right_path))
+
+    assert result.returncode == 0, result.stderr
+    comparison = json.loads(result.stdout)
+    assert comparison["left_artifact_path"] == str(left_path.resolve())
+    assert comparison["right_artifact_path"] == str(right_path.resolve())
+    assert comparison["identical"] is False
+    assert comparison["difference"] == {
+        "scope": "event",
+        "event_index": 0,
+        "step": 0,
+        "phase": "OBSERVE",
+        "field_path": ["payload", "goal"],
+        "baseline_value": 2.0,
+        "repaired_value": 3.0,
+    }

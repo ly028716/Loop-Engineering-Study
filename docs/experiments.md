@@ -1,6 +1,6 @@
 # Experiments
 
-Trace-pair comparison guide: [Trace difference analysis](trace-diff-analysis.md).
+Generic Artifact tooling: [replay and comparison](replay.md). Scenario-specific trace-pair guide: [Trace difference analysis](trace-diff-analysis.md).
 
 所有实验都在本地运行，只依赖项目代码和 Python 标准库。建议按以下顺序进行：
 
