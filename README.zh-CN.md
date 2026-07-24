@@ -1,5 +1,7 @@
 # Loop Engineering Study
 
+[多修复方案选择](docs/multi-repair-selection.md)：重跑多个确定性候选并按证据选优。
+
 [Trace 差异分析](docs/trace-diff-analysis.md)：对诊断修复前后的 Artifact 定位首个可观察分歧。
 
 > 一个可执行的 Loop Engineering 学习实验室。
