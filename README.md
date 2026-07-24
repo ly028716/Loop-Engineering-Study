@@ -69,10 +69,11 @@ memory, convergence, and stopping behavior:
 15. [Stochastic robustness experiment](docs/stochastic-robustness.md)
 16. [Trace difference analysis](docs/trace-diff-analysis.md)
 17. [Artifact replay and comparison](docs/replay.md)
-18. [Semantic regression gate](docs/regression-gate.md)
-19. [Architecture](docs/architecture.md)
-20. [Metrics](docs/metrics.md)
-21. [Theory notes](theory/)
+18. [External HTTP model adapter](docs/external-model-adapter.md)
+19. [Semantic regression gate](docs/regression-gate.md)
+20. [Architecture](docs/architecture.md)
+21. [Metrics](docs/metrics.md)
+22. [Theory notes](theory/)
 
 ## Development
 
