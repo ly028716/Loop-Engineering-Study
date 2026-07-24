@@ -137,6 +137,66 @@ def compare_traces(
                     repaired_value=repaired_value,
                 ),
             )
+    if len(baseline.events) != len(repaired.events):
+        index = min(len(baseline.events), len(repaired.events))
+        baseline_event = baseline.events[index] if index < len(baseline.events) else None
+        repaired_event = repaired.events[index] if index < len(repaired.events) else None
+        event = baseline_event if baseline_event is not None else repaired_event
+        return _comparison(
+            baseline,
+            repaired,
+            baseline_metrics,
+            repaired_metrics,
+            TraceDifference(
+                scope="event_count",
+                event_index=index,
+                step=event.step if event is not None else None,
+                phase=event.phase if event is not None else None,
+                field_path=("events", index),
+                baseline_value=asdict(baseline_event) if baseline_event is not None else None,
+                repaired_value=asdict(repaired_event) if repaired_event is not None else None,
+            ),
+        )
+    final_state_difference = _first_value_difference(
+        _snapshot(baseline.final_state), _snapshot(repaired.final_state)
+    )
+    if final_state_difference is not None:
+        path, baseline_value, repaired_value = final_state_difference
+        return _comparison(
+            baseline,
+            repaired,
+            baseline_metrics,
+            repaired_metrics,
+            TraceDifference(
+                scope="final_state",
+                event_index=None,
+                step=None,
+                phase=None,
+                field_path=path,
+                baseline_value=baseline_value,
+                repaired_value=repaired_value,
+            ),
+        )
+    metric_difference = _first_value_difference(
+        asdict(baseline_metrics), asdict(repaired_metrics)
+    )
+    if metric_difference is not None:
+        path, baseline_value, repaired_value = metric_difference
+        return _comparison(
+            baseline,
+            repaired,
+            baseline_metrics,
+            repaired_metrics,
+            TraceDifference(
+                scope="metrics",
+                event_index=None,
+                step=None,
+                phase=None,
+                field_path=path,
+                baseline_value=baseline_value,
+                repaired_value=repaired_value,
+            ),
+        )
     return _comparison(baseline, repaired, baseline_metrics, repaired_metrics, None)
 
 
