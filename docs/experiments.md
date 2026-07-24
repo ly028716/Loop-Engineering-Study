@@ -1,5 +1,7 @@
 # Experiments
 
+Trace-pair comparison guide: [Trace difference analysis](trace-diff-analysis.md).
+
 所有实验都在本地运行，只依赖项目代码和 Python 标准库。建议按以下顺序进行：
 
 ```powershell
@@ -15,6 +17,7 @@ python experiments/benchmark_suite.py
 python experiments/sensitivity_analysis.py
 python experiments/trace_diagnostics.py
 python experiments/diagnosis_repair_loop.py
+python experiments/trace_diff_analysis.py
 python experiments/regression_gate.py
 ```
 
