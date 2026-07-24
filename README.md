@@ -64,10 +64,11 @@ memory, convergence, and stopping behavior:
 10. [Parameter sensitivity analysis](docs/sensitivity-analysis.md)
 11. [Trace diagnostics](docs/trace-diagnostics.md)
 12. [Diagnosis-driven repair loop](docs/diagnosis-repair-loop.md)
-13. [Architecture](docs/architecture.md)
-14. [Metrics](docs/metrics.md)
-15. [Replayable artifacts](docs/replay.md)
-16. [Theory notes](theory/)
+13. [Semantic regression gate](docs/regression-gate.md)
+14. [Architecture](docs/architecture.md)
+15. [Metrics](docs/metrics.md)
+16. [Replayable artifacts](docs/replay.md)
+17. [Theory notes](theory/)
 
 ## Development
 
