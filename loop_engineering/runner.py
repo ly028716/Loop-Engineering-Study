@@ -39,6 +39,7 @@ class LoopRunner:
     def run(self, initial_state: LoopState) -> LoopTrace:
         """Run complete observable iterations until a condition or safety stop."""
 
+        self.memory.clear()
         trace = LoopTrace()
         state = initial_state
         feedback = Feedback.empty()
