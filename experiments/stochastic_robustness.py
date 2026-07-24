@@ -3,7 +3,15 @@
 from __future__ import annotations
 
 import random
+import json
 from pathlib import Path
+
+if __package__:
+    from ._bootstrap import prepare_script_imports
+else:
+    from _bootstrap import prepare_script_imports
+
+    prepare_script_imports(__file__)
 
 from loop_engineering.actions import Action, ActionResult
 from loop_engineering.artifacts import save_run_artifact
@@ -93,7 +101,16 @@ def run_stochastic_robustness(output_dir: str | Path = ".loop/runs/stochastic-ro
     summaries = [_summary(level, strategy, [item for item in runs if item["level"] == level and item["strategy"] == strategy]) for level, _, _ in LEVELS for strategy in STRATEGIES]
     rankings = {level: sorted([item for item in summaries if item["level"] == level], key=lambda item: (-float(item["success_rate"]), float(item["cost_p90"]), float(item["mean_steps"]), STRATEGIES.index(str(item["strategy"])))) for level, _, _ in LEVELS}
     result = {"levels": [item[0] for item in LEVELS], "strategies": list(STRATEGIES), "runs": runs, "summaries": summaries, "rankings": rankings}
-    import json
     root.mkdir(parents=True, exist_ok=True)
     (root / "report.json").write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     return result
+
+
+def main() -> None:
+    """Print the complete stochastic robustness report as JSON."""
+
+    print(json.dumps(run_stochastic_robustness(), ensure_ascii=False, indent=2))
+
+
+if __name__ == "__main__":
+    main()
