@@ -24,3 +24,4 @@
 - Phase 2 stochastic robustness: complete (96 seeded stochastic runs, 12 strategy-level summaries, stable rankings, and 78 passing tests verified)
 - Phase 2 Artifact replay and comparison: complete (generic CLI replay/compare commands, complete Artifact JSON output, reused first-difference comparison, and 88 passing tests verified)
 - Phase 2 external HTTP model adapter: complete (explicit HTTPS configuration, strict JSON Decision contract, ModelPolicy integration, no-network teaching demo, and 98 passing tests verified)
+- Phase 2 independent semantic gate CI: complete (separate Python 3.11 job, always-uploaded semantic-gate-evidence Artifact, and 99 passing tests verified)

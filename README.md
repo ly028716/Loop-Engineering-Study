@@ -82,6 +82,9 @@ python -m pytest -q
 python -m build --wheel
 ```
 
+CI runs the Python test-and-build matrix first, then a separate Python 3.11
+semantic gate that uploads `semantic-gate-evidence` for diagnosis.
+
 See [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request. CI runs
 the same test and wheel-build checks on supported Python versions.
 
