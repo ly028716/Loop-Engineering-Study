@@ -1,5 +1,7 @@
 # Loop Engineering Study
 
+[多目标评估](docs/multi-objective-evaluation.md)：通过 Pareto 前沿保留成功率、成本与完成步数之间的权衡。
+
 [随机性与鲁棒性实验](docs/stochastic-robustness.md)：以固定种子比较策略在随机扰动下的经验表现。
 
 [多修复方案选择](docs/multi-repair-selection.md)：重跑多个确定性候选并按证据选优。
