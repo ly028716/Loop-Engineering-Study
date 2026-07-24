@@ -74,7 +74,7 @@ class HttpModelAdapter:
         if not endpoint.startswith("https://"):
             raise ModelAdapterError("Model endpoint must use HTTPS")
         if not model.strip():
-            raise ModelAdapterError("Model name must not be empty")
+            raise ModelAdapterError("model name must not be empty")
         if timeout_seconds <= 0:
             raise ModelAdapterError("Model timeout must be positive")
 
@@ -130,4 +130,3 @@ class HttpModelAdapter:
                 )
             numeric_parameters[key] = float(value)
         return Decision(name=name, parameters=numeric_parameters)
-
