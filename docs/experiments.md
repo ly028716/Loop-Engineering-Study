@@ -18,6 +18,7 @@ python experiments/sensitivity_analysis.py
 python experiments/trace_diagnostics.py
 python experiments/diagnosis_repair_loop.py
 python experiments/multi_repair_selection.py
+python experiments/stochastic_robustness.py
 python experiments/trace_diff_analysis.py
 python experiments/regression_gate.py
 ```

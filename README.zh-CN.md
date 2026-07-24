@@ -1,5 +1,7 @@
 # Loop Engineering Study
 
+[随机性与鲁棒性实验](docs/stochastic-robustness.md)：以固定种子比较策略在随机扰动下的经验表现。
+
 [多修复方案选择](docs/multi-repair-selection.md)：重跑多个确定性候选并按证据选优。
 
 [Trace 差异分析](docs/trace-diff-analysis.md)：对诊断修复前后的 Artifact 定位首个可观察分歧。
