@@ -14,6 +14,7 @@ python experiments/convergence_stopping.py
 python experiments/failure_modes.py
 python experiments/adaptive_strategy.py
 python experiments/benchmark_suite.py
+python experiments/multi_objective_evaluation.py
 python experiments/sensitivity_analysis.py
 python experiments/trace_diagnostics.py
 python experiments/diagnosis_repair_loop.py
