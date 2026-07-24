@@ -20,3 +20,11 @@ python experiments/regression_gate.py
 ## 解释边界
 
 门禁只断言这些确定性实验的关键语义，不比较完整 Artifact 内容，不自动修复失败，也不对真实服务性能作结论。若门禁失败，应先阅读 `evidence`，再回放对应子目录中的 Trace Artifact 定位行为变化。
+
+## 独立 CI 门禁
+
+GitHub Actions 在测试矩阵通过后运行独立的 `semantic-gate` job。该 job 使用 Python 3.11 执行 `python experiments/regression_gate.py`；任一语义契约失败都会使该 job 失败。
+
+无论成功或失败，工作流都会上传名为 `semantic-gate-evidence` 的 Artifact。下载后查看 `.loop/runs/regression-gate/` 下的 benchmark、sensitivity、diagnostics 和 repair-loop 子目录，以及它们保存的可回放 Trace 与报告。
+
+仓库代码只提供该检查；是否在 GitHub 分支保护规则中把 `semantic-gate` 设为必需状态，由仓库管理员在 GitHub 设置中决定。
