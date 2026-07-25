@@ -19,7 +19,7 @@ OBSERVE → DECIDE → ACT → EVALUATE → FEEDBACK
 - A policy turns the observed state into one bounded decision.
 - An action applies that decision and returns the next state.
 - An evaluator compares the result with the goal and produces feedback.
-- Memory stores selected observations across rounds.
+- Memory stores a bounded event window for the current run and is cleared before the next run begins.
 - Metrics derive a compact report from the completed trace.
 - A stopping condition decides whether the loop succeeds, stops, or continues.
 - `LoopTrace` is the observable contract connecting these components.
@@ -36,6 +36,10 @@ For each round, the runner records `OBSERVE`, `DECIDE`, `ACT`, `EVALUATE`, and
 
 The CLI and direct experiment scripts use the same runtime boundary. They differ
 only in how policies, actions, evaluators, and fault conditions are configured.
+
+A runner may be reused, but each `run()` starts with an empty WorkingMemory.
+This makes the resulting Trace and Artifact self-contained evidence for every
+policy decision in that run.
 
 ## Design boundaries
 

@@ -141,3 +141,23 @@ def test_runner_records_events_in_memory_and_provides_them_to_compatible_policie
         "OBSERVE",
     ]
     assert memory.recent(20) == trace.events
+
+
+def test_runner_clears_memory_before_each_new_run() -> None:
+    policy = MemoryRecordingPolicy()
+    memory = WorkingMemory(capacity=20)
+    runner = LoopRunner(
+        policy=policy,
+        action=NumericAction(),
+        evaluator=GoalEvaluator(tolerance=0.0),
+        stop_conditions=[MaxSteps(1)],
+        memory=memory,
+    )
+
+    first_trace = runner.run(LoopState(step=0, value=0.0, goal=5.0))
+    second_trace = runner.run(LoopState(step=0, value=0.0, goal=5.0))
+
+    assert [event.phase for event in policy.recent_events[0]] == ["OBSERVE"]
+    assert policy.recent_events[1] == [second_trace.events[0]]
+    assert memory.recent(20) == second_trace.events
+    assert first_trace.events == second_trace.events

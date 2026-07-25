@@ -21,6 +21,11 @@ class WorkingMemory:
 
         self._events.append(event)
 
+    def clear(self) -> None:
+        """Forget all events while retaining the configured capacity."""
+
+        self._events.clear()
+
     def recent(self, limit: int) -> list[LoopEvent]:
         """Return up to ``limit`` newest events in chronological order."""
 

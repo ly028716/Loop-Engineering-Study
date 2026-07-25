@@ -34,3 +34,18 @@ def test_working_memory_rejects_non_positive_capacity() -> None:
 
     with pytest.raises(ValueError, match="capacity"):
         WorkingMemory(capacity=0)
+
+
+def test_working_memory_clear_forgets_events_and_keeps_capacity() -> None:
+    from loop_engineering.memory import WorkingMemory
+
+    memory = WorkingMemory(capacity=2)
+    memory.add(event(1))
+    memory.add(event(2))
+
+    memory.clear()
+
+    assert memory.capacity == 2
+    assert memory.recent(10) == []
+    memory.add(event(3))
+    assert memory.recent(10) == [event(3)]
