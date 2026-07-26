@@ -22,6 +22,7 @@ python experiments/multi_repair_selection.py
 python experiments/stochastic_robustness.py
 python experiments/trace_diff_analysis.py
 python experiments/external_model_adapter.py
+python experiments/local_tool_adapter.py
 python experiments/regression_gate.py
 ```
 
@@ -86,6 +87,12 @@ python experiments/regression_gate.py
 ## 回归门禁
 
 `regression_gate.py` 汇总 benchmark、敏感性、诊断和修复闭环的语义契约，防止关键学习能力退化。详细说明见 [regression-gate.md](regression-gate.md)。
+
+## 受控本地工具适配
+
+`local_tool_adapter.py` 仅执行已注册的 Python `--version` 诊断命令，展示如何将
+固定 argv、超时和受限输出映射为既有 Action、Trace 与 Artifact。详细说明见
+[local-tool-adapter.md](local-tool-adapter.md)。
 
 每个脚本都会输出摘要，并将完整 Trace 写入 `.loop/runs/`。运行产物可以通过
 `loop_engineering.artifacts.load_run_artifact()` 加载。
