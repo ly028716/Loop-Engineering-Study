@@ -90,7 +90,7 @@ half-open --可恢复失败或重试耗尽--> open
 
 - `closed`：允许调用。成功调用将连续失败数重置为 0。
 - `open`：在 `clock() < opened_at + cooldown_seconds` 时，`complete()` 立即抛出 `ModelAdapterError`，且绝不调用 transport。
-- `half-open`：冷却到期后的首个调用是唯一探测调用。探测成功后关闭熔断器并清零失败数；探测失败后重新打开并更新 `opened_at`。
+- `half-open`：冷却到期后的首个调用是唯一探测调用，且只允许一次 transport 调用，不使用普通重试预算。探测成功后关闭熔断器并清零失败数；任何可恢复探测失败都会重新打开并更新 `opened_at`。
 - 为保证单线程学习运行时的行为确定，半开状态不提供并发探测协调；并发生产部署属于后续独立课题。
 
 新增只读 `reliability_snapshot() -> dict[str, object]`，返回：
