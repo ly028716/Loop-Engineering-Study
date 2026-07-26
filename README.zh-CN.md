@@ -1,5 +1,7 @@
 # Loop Engineering Study
 
+[受控本地工具适配层](docs/local-tool-adapter.md)：仅以显式白名单运行固定诊断命令，并把结果接入既有 Loop。
+
 [外部 HTTP 模型适配层](docs/external-model-adapter.md)：以显式配置和严格 JSON 契约让模型生成 Decision，默认不发网络请求。
 
 [Artifact 回放与对比](docs/replay.md)：读取单个 Artifact 或比较任意两个 Artifact，全程不重新执行动作。
@@ -77,7 +79,9 @@ python experiments/repair_loop.py
 14. [系统架构](docs/architecture.md)
 15. [指标定义](docs/metrics.md)
 16. [可回放 Artifact](docs/replay.md)
-17. [理论笔记](theory/)
+17. [外部 HTTP 模型适配层](docs/external-model-adapter.md)
+18. [受控本地工具适配层](docs/local-tool-adapter.md)
+19. [理论笔记](theory/)
 
 ## 开发
 

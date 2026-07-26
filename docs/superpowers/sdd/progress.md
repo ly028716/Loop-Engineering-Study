@@ -26,3 +26,4 @@
 - Phase 2 external HTTP model adapter: complete (explicit HTTPS configuration, strict JSON Decision contract, ModelPolicy integration, no-network teaching demo, and 98 passing tests verified)
 - Phase 2 independent semantic gate CI: complete (separate Python 3.11 job, always-uploaded semantic-gate-evidence Artifact, and 99 passing tests verified)
 - Phase 2 memory lifecycle contract: complete (per-run memory reset, self-contained Artifact decision context, and 101 passing tests verified)
+- Phase 2 controlled local tool adapter: complete (explicit fixed-command allowlist, ToolAction mapping, diagnostic-only Python-version experiment, bounded report output, and 117 passing tests verified)

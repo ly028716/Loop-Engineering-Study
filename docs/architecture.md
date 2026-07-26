@@ -41,6 +41,13 @@ A runner may be reused, but each `run()` starts with an empty WorkingMemory.
 This makes the resulting Trace and Artifact self-contained evidence for every
 policy decision in that run.
 
+`ToolAction` is an optional explicit Action boundary for a registered local
+diagnostic command. Its `LocalToolAdapter` accepts only a construction-time
+allowlist with absolute paths, fixed arguments, a timeout, and `shell=False`.
+No tool is registered by default, so normal CLI and experiment runs do not
+start subprocesses. Tool output remains outside ACT events and Artifacts;
+the runner continues to observe only the standard action success flag and cost.
+
 ## Design boundaries
 
 The baseline is intentionally local and deterministic. There is no network

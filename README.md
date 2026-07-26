@@ -70,10 +70,11 @@ memory, convergence, and stopping behavior:
 16. [Trace difference analysis](docs/trace-diff-analysis.md)
 17. [Artifact replay and comparison](docs/replay.md)
 18. [External HTTP model adapter](docs/external-model-adapter.md)
-19. [Semantic regression gate](docs/regression-gate.md)
-20. [Architecture](docs/architecture.md)
-21. [Metrics](docs/metrics.md)
-22. [Theory notes](theory/)
+19. [Controlled local tool adapter](docs/local-tool-adapter.md)
+20. [Semantic regression gate](docs/regression-gate.md)
+21. [Architecture](docs/architecture.md)
+22. [Metrics](docs/metrics.md)
+23. [Theory notes](theory/)
 
 ## Development
 

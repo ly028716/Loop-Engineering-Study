@@ -5,7 +5,7 @@ from __future__ import annotations
 from .actions import Action, ActionResult
 from .models import LoopState
 from .policies import Decision
-from .tool_adapters import LocalToolAdapter, ToolAdapterError
+from .tool_adapters import LocalToolAdapter, ToolAdapterError, ToolExecution
 
 
 class ToolAction(Action):
@@ -13,6 +13,7 @@ class ToolAction(Action):
 
     def __init__(self, adapter: LocalToolAdapter) -> None:
         self.adapter = adapter
+        self.last_execution: ToolExecution | None = None
 
     def apply(self, state: LoopState, decision: Decision) -> ActionResult:
         """Execute one registered tool and expose only outcome and duration."""
@@ -21,6 +22,7 @@ class ToolAction(Action):
             raise ToolAdapterError("Tool decisions must not include parameters")
 
         execution = self.adapter.execute(decision.name)
+        self.last_execution = execution
         return ActionResult(
             state=state.with_value(state.value),
             success=execution.success,
