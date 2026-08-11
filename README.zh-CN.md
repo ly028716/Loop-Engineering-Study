@@ -1,106 +1,68 @@
 # Loop Engineering Study
 
-> 详细学习材料以中文为主；英文项目概览见 [README.md](README.md)。
+> 给已会 Python、想系统理解 AI/Agent 如何通过“决策—执行—评估—反馈”迭代改进的开发者。
 
-[受控本地工具适配层](docs/local-tool-adapter.md)：仅以显式白名单运行固定诊断命令，并把结果接入既有 Loop。
+这是一个**45 分钟、可本地运行的 Loop Engineering 课程**，同时附带一个小型可复用框架。你不需要 API Key、模型服务或网络：先从一个会失败的代码修复 Agent 开始，读懂 trace，再用证据完成一次改进。
 
-[外部 HTTP 模型适配层](docs/external-model-adapter.md)：以显式配置和严格 JSON 契约让模型生成 Decision，默认不发网络请求。
+## 你会学到什么
 
-[Artifact 回放与对比](docs/replay.md)：读取单个 Artifact 或比较任意两个 Artifact，全程不重新执行动作。
+完成主线后，你能回答并用 Artifact 证明：
 
-[多目标评估](docs/multi-objective-evaluation.md)：通过 Pareto 前沿保留成功率、成本与完成步数之间的权衡。
+- 为什么循环没有改进：是 Policy 忽略了反馈、Evaluator 没有给出可行动信号，还是 Stop policy 只是在耗尽预算？
+- 为什么“动作执行成功”不代表任务已经成功？
+- 如何只改一个闭环部件，并比较改进前后的运行证据？
 
-[随机性与鲁棒性实验](docs/stochastic-robustness.md)：以固定种子比较策略在随机扰动下的经验表现。
+课程使用一个确定性的 Python 函数修复案例：第一个候选补丁在部分输入上可运行，但会在边界测试失败；第二个候选补丁才能通过全部测试。
 
-[多修复方案选择](docs/multi-repair-selection.md)：重跑多个确定性候选并按证据选优。
+## 45 分钟主线
 
-[Trace 差异分析](docs/trace-diff-analysis.md)：对诊断修复前后的 Artifact 定位首个可观察分歧。
-
-> 一个可执行的 Loop Engineering 学习实验室。
-
-Loop Engineering Study 是一个独立、本地优先的 Python 学习项目，用于研究
-如何设计和评估可观察、可重复的改进循环。它是学习运行时和实验集合，不是
-Agent 平台，也不是生产 Harness。
-
-项目基线完全确定性运行，不需要 API Key、数据库、模型服务或 Web 框架。每次
-运行都会显式呈现以下循环：
-
-```text
-OBSERVE → DECIDE → ACT → EVALUATE → FEEDBACK → STOP
-```
-
-## 当前已实现
-
-- 具备明确状态、策略、动作、评估器、记忆、指标和停止条件边界的
-  `LoopRunner`。
-- 记录每一轮循环的结构化事件 Trace。
-- 持久化包含 `events`、`final_state` 和 `metrics` 的 JSON Artifact。
-- 可确定性复现的成功、重试、失败和停止行为。
-- CLI，以及 `basic_loop`、`retry_loop`、`repair_loop` 三个可执行实验。
-- 覆盖运行时和打包契约的 pytest 测试集。
-
-项目刻意从确定性行为开始。外部模型或服务属于未来实验输入，不会成为当前
-基线的隐式依赖。
-
-## 快速开始
-
-需要 Python 3.11 或更高版本：
+先安装开发依赖（Python 3.11+）：
 
 ```powershell
 python -m pip install -e ".[dev]"
-python -m loop_engineering.cli run --goal 3 --max-steps 10 --output .loop/runs/demo.json
-Get-Content -Raw .loop/runs/demo.json
 ```
 
-CLI 会输出 JSON 摘要，并写入一份可回放的完整 Artifact。按以下顺序运行三个
-学习实验：
+然后按顺序完成三节课：
+
+1. [从失败的循环开始](course/01-baseline.md)（10 分钟）——运行 [`experiments/code_repair/baseline.py`](experiments/code_repair/baseline.py)，区分 action 成功与 evaluation 成功。
+2. [用 trace 定位“为什么没有改进”](course/02-read-the-trace.md)（20 分钟）——完成三个只改变一个部件的实验。
+3. [做一次可验证的改进](course/03-improve-the-loop.md)（15 分钟）——比较 before / after Artifact，验证反馈驱动的 Policy 改动。
+
+主线命令也可以直接从这里运行：
 
 ```powershell
-python experiments/basic_loop.py
-python experiments/retry_loop.py
-python experiments/repair_loop.py
+python experiments/code_repair/baseline.py
+python experiments/code_repair/evaluator_signal.py
+python experiments/code_repair/feedback_strategy.py
+python experiments/code_repair/stopping_policy.py
 ```
 
-## 学习路径
+每次运行都会写入 `.loop/runs/code-repair/`，保存完整事件、最终状态、指标和停止原因。
 
-建议先理解概念模型，再依次观察完整循环、反馈、记忆、收敛和停止行为：
+## 小型框架如何对应课程
 
-1. [核心概念](docs/concepts.md)
-2. [学习路径](docs/learning-path.md)
-3. [实验说明](docs/experiments.md)
-4. [反馈策略对比实验](docs/feedback-strategies.md)
-5. [记忆容量对比实验](docs/memory-capacity.md)
-6. [收敛与停止条件](docs/convergence-stopping.md)
-7. [失败模式与恢复策略](docs/failure-modes.md)
-8. [自适应策略与预算分配](docs/adaptive-strategy.md)
-9. [评测基准与排行榜](docs/benchmark-suite.md)
-10. [参数敏感性分析](docs/sensitivity-analysis.md)
-11. [Trace 诊断](docs/trace-diagnostics.md)
-12. [诊断驱动修复闭环](docs/diagnosis-repair-loop.md)
-13. [语义回归门禁](docs/regression-gate.md)
-14. [系统架构](docs/architecture.md)
-15. [指标定义](docs/metrics.md)
-16. [可回放 Artifact](docs/replay.md)
-17. [外部 HTTP 模型适配层](docs/external-model-adapter.md)
-18. [受控本地工具适配层](docs/local-tool-adapter.md)
-19. [理论笔记](theory/)
+| 课程问题 | 可复用边界 | 代码位置 |
+| --- | --- | --- |
+| 下一步尝试什么 | `Policy` | `loop_engineering/policies.py` |
+| 如何执行尝试 | `Action` | `loop_engineering/actions.py` |
+| 是否真的变好 | `Evaluator` | `loop_engineering/evaluators.py` |
+| 何时停止 | `StopPolicy` | `loop_engineering/stopping.py` |
+| 如何保存和比较证据 | Artifact / CLI | `loop_engineering/artifacts.py` |
 
-## 开发
+案例实现位于 [`examples/code_repair`](examples/code_repair)，你可以复制它的边界并替换自己的问题、动作和评估器。
+
+## 继续学习
+
+- [课程学习路径](docs/learning-path.md)：课程结束后的练习与迁移方式。
+- [参考索引](docs/reference/index.md)：架构、指标、概念、实验与理论材料。
+- [进阶索引](docs/advanced/index.md)：外部模型、受控工具、多目标评估和鲁棒性实验。
+
+## 开发与验证
 
 ```powershell
 python -m pytest -q
+python scripts/check_docs.py
 python -m build --wheel
 ```
 
-提交 Pull Request 前请阅读 [CONTRIBUTING.md](CONTRIBUTING.md)。CI 会在支持的
-Python 版本上执行相同的测试和 wheel 构建检查。
-
-## 项目边界
-
-本仓库是独立的 Loop Engineering 学习项目，不是通用自主 Agent 框架、LLM
-编排系统或生产可靠性解决方案。新增能力应尽量保留可观察 Trace、可确定性
-测试和显式停止条件。
-
-## 许可证
-
-项目采用 [MIT License](LICENSE) 发布。
+提交变更前请阅读 [CONTRIBUTING.md](CONTRIBUTING.md)；发布时使用[发布检查清单](docs/release-checklist.md)。项目采用 [MIT License](LICENSE)。

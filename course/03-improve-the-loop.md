@@ -27,4 +27,4 @@ python -m loop_engineering.cli compare .loop/runs/code-repair/baseline.json .loo
 3. 从 Artifact 中定位没有发生状态改变的部件。
 4. 每次只改一个部件，再比较 before / after Artifact。
 
-小型框架中的 `Policy`、`Action`、`Evaluator` 与 `StopPolicy` 是可复用边界；`examples/code_repair` 则是它们如何协作的最小可运行参考。完成这里后，可阅读现有的[架构说明](../docs/architecture.md)和[指标说明](../docs/metrics.md)。下一项改造会为这些材料补上参考与进阶索引。
+小型框架中的 `Policy`、`Action`、`Evaluator` 与 `StopPolicy` 是可复用边界；`examples/code_repair` 则是它们如何协作的最小可运行参考。完成这里后，可前往[参考索引](../docs/reference/index.md)了解架构与指标，或到[进阶索引](../docs/advanced/index.md)接入模型与工具。

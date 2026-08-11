@@ -1,75 +1,33 @@
-"""Project-level documentation contracts for the completed learning baseline."""
+"""Contracts for the public learning entry points."""
+
+from __future__ import annotations
 
 from pathlib import Path
 
-import pytest
-
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-LEARNING_PATH = PROJECT_ROOT / "docs" / "learning-path.md"
-CONCEPTS = PROJECT_ROOT / "docs" / "concepts.md"
-README = PROJECT_ROOT / "README.md"
 
 
-@pytest.mark.parametrize(
-    "relative_path",
-    [
-        "theory/loop-models.md",
-        "theory/feedback-systems.md",
-        "experiments/basic_loop.py",
-    ],
-)
-def test_learning_path_links_to_existing_files(relative_path: str) -> None:
-    text = LEARNING_PATH.read_text(encoding="utf-8")
-    link_target = f"../{relative_path}"
+def test_chinese_readme_is_course_first() -> None:
+    readme = (PROJECT_ROOT / "README.zh-CN.md").read_text(encoding="utf-8")
 
-    assert relative_path in text
-    assert f"]({link_target})" in text
-    assert (PROJECT_ROOT / relative_path).is_file()
-    assert (LEARNING_PATH.parent / link_target).resolve().is_file()
-
-
-def test_concepts_describe_and_link_the_implemented_runtime() -> None:
-    text = CONCEPTS.read_text(encoding="utf-8")
-
-    assert "不定义运行时模型" not in text
-    for relative_path in (
-        "loop_engineering/models.py",
-        "loop_engineering/runner.py",
-        "loop_engineering/policies.py",
-        "loop_engineering/actions.py",
-        "loop_engineering/evaluators.py",
-        "loop_engineering/stopping.py",
-        "loop_engineering/memory.py",
-        "loop_engineering/metrics.py",
-        "loop_engineering/artifacts.py",
-        "loop_engineering/cli.py",
-        "experiments/basic_loop.py",
+    for expected in (
+        "已会 Python",
+        "45 分钟",
+        "为什么循环没有改进",
+        "course/01-baseline.md",
+        "experiments/code_repair/baseline.py",
     ):
-        link_target = f"../{relative_path}"
-        assert f"]({link_target})" in text
-        assert (CONCEPTS.parent / link_target).resolve().is_file()
+        assert expected in readme
 
 
-def test_readme_exposes_beginner_route_trace_preview_and_language_expectation() -> None:
-    text = README.read_text(encoding="utf-8")
+def test_reference_and_advanced_indexes_separate_follow_up_material() -> None:
+    reference = (PROJECT_ROOT / "docs" / "reference" / "index.md").read_text(
+        encoding="utf-8"
+    )
+    advanced = (PROJECT_ROOT / "docs" / "advanced" / "index.md").read_text(
+        encoding="utf-8"
+    )
 
-    assert "30-minute beginner route" in text
-    assert "Documentation language" in text
-    assert "OBSERVE" in text
-    assert "DECIDE" in text
-    assert "ACT" in text
-    assert "EVALUATE" in text
-    assert "FEEDBACK" in text
-    assert "STOP" in text
-    assert "README.zh-CN.md" in text
-
-
-def test_release_and_archive_guides_exist() -> None:
-    release_checklist = PROJECT_ROOT / "docs" / "release-checklist.md"
-    archive_guide = PROJECT_ROOT / "docs" / "superpowers" / "README.md"
-
-    assert release_checklist.is_file()
-    assert "GitHub Release" in release_checklist.read_text(encoding="utf-8")
-    assert archive_guide.is_file()
-    assert "archive" in archive_guide.read_text(encoding="utf-8").lower()
+    assert "architecture.md" in reference
+    assert "external-model-adapter.md" in advanced
