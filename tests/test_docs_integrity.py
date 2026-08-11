@@ -52,3 +52,14 @@ def test_check_repository_ignores_development_archive(tmp_path: Path) -> None:
     )
 
     assert check_repository(tmp_path) == []
+
+
+def test_check_repository_ignores_linked_worktrees(tmp_path: Path) -> None:
+    linked_worktree = tmp_path / ".worktrees" / "other-checkout"
+    linked_worktree.mkdir(parents=True)
+    (linked_worktree / "README.md").write_text(
+        "[Historical link](docs/no-longer-current.md)\n",
+        encoding="utf-8",
+    )
+
+    assert check_repository(tmp_path) == []
