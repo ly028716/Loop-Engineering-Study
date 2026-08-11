@@ -8,6 +8,7 @@ import pytest
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 LEARNING_PATH = PROJECT_ROOT / "docs" / "learning-path.md"
 CONCEPTS = PROJECT_ROOT / "docs" / "concepts.md"
+README = PROJECT_ROOT / "README.md"
 
 
 @pytest.mark.parametrize(
@@ -48,3 +49,27 @@ def test_concepts_describe_and_link_the_implemented_runtime() -> None:
         link_target = f"../{relative_path}"
         assert f"]({link_target})" in text
         assert (CONCEPTS.parent / link_target).resolve().is_file()
+
+
+def test_readme_exposes_beginner_route_trace_preview_and_language_expectation() -> None:
+    text = README.read_text(encoding="utf-8")
+
+    assert "30-minute beginner route" in text
+    assert "Documentation language" in text
+    assert "OBSERVE" in text
+    assert "DECIDE" in text
+    assert "ACT" in text
+    assert "EVALUATE" in text
+    assert "FEEDBACK" in text
+    assert "STOP" in text
+    assert "README.zh-CN.md" in text
+
+
+def test_release_and_archive_guides_exist() -> None:
+    release_checklist = PROJECT_ROOT / "docs" / "release-checklist.md"
+    archive_guide = PROJECT_ROOT / "docs" / "superpowers" / "README.md"
+
+    assert release_checklist.is_file()
+    assert "GitHub Release" in release_checklist.read_text(encoding="utf-8")
+    assert archive_guide.is_file()
+    assert "archive" in archive_guide.read_text(encoding="utf-8").lower()

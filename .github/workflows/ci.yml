@@ -20,7 +20,9 @@ jobs:
           python-version: ${{ matrix.python-version }}
           cache: pip
       - name: Install project and development dependencies
-        run: python -m pip install -e ".[dev]" build
+        run: python -m pip install -e ".[dev]"
+      - name: Run documentation integrity check
+        run: python scripts/check_docs.py
       - name: Run tests
         run: python -m pytest -q
       - name: Build wheel

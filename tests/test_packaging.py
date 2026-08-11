@@ -24,3 +24,13 @@ def test_explicit_package_discovery_includes_runtime_and_experiments() -> None:
         )
     )
     assert {"loop_engineering", "experiments"} <= discovered
+
+
+def test_dev_extra_includes_documented_verification_tools() -> None:
+    with (PROJECT_ROOT / "pyproject.toml").open("rb") as pyproject_file:
+        pyproject = tomllib.load(pyproject_file)
+
+    dependencies = pyproject["project"]["optional-dependencies"]["dev"]
+
+    assert "pytest>=8.0" in dependencies
+    assert "build>=1.2" in dependencies

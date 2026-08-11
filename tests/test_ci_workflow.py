@@ -17,3 +17,10 @@ def test_ci_has_independent_semantic_gate_with_evidence_upload() -> None:
     assert "if: always()" in workflow
     assert "uses: actions/upload-artifact@v4" in workflow
 
+
+def test_ci_checks_public_documentation_before_running_tests() -> None:
+    workflow = CI_WORKFLOW.read_text(encoding="utf-8")
+
+    assert "Run documentation integrity check" in workflow
+    assert "python scripts/check_docs.py" in workflow
+
