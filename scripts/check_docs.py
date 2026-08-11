@@ -31,6 +31,8 @@ def check_repository(root: Path) -> list[str]:
     errors: list[str] = []
     for markdown_file in sorted(root.rglob("*.md")):
         relative_file = markdown_file.relative_to(root)
+        if {".git", ".worktrees", "worktrees"}.intersection(relative_file.parts):
+            continue
         if relative_file.parts[:2] == ("docs", "superpowers"):
             continue
         try:
