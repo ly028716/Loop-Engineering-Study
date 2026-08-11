@@ -7,6 +7,12 @@ studying how observable, repeatable improvement loops are designed and
 evaluated. It is a learning runtime and experiment collection, not an agent
 platform or production harness.
 
+## Documentation language
+
+The detailed learning materials are Chinese-first. This English README is a
+project overview; use the [Chinese README](README.zh-CN.md) and the
+[learning path](docs/learning-path.md) for the complete guided curriculum.
+
 The baseline is deterministic and requires no API key, database, model service,
 or web framework. Each run makes the loop visible:
 
@@ -47,34 +53,48 @@ python experiments/retry_loop.py
 python experiments/repair_loop.py
 ```
 
-## Learning path
+## 30-minute beginner route
 
-Start with the conceptual model, then inspect one complete loop, feedback,
-memory, convergence, and stopping behavior:
+1. Run the CLI command above and open `.loop/runs/demo.json`.
+2. Run `basic_loop`, then `retry_loop`, then `repair_loop` to see success,
+   feedback-driven retry, and a bounded stop caused by evaluator disagreement.
+3. Read [Loop concepts](docs/concepts.md) and follow the Chinese-first
+   [learning path](docs/learning-path.md) before changing one loop component.
 
-1. [Loop concepts](docs/concepts.md)
-2. [Learning path](docs/learning-path.md)
-3. [Experiments](docs/experiments.md)
-4. [Feedback strategy comparison](docs/feedback-strategies.md)
-5. [Memory capacity comparison](docs/memory-capacity.md)
-6. [Convergence and stopping](docs/convergence-stopping.md)
-7. [Failure modes and recovery](docs/failure-modes.md)
-8. [Adaptive strategy and budget allocation](docs/adaptive-strategy.md)
-9. [Benchmark suite and ranking](docs/benchmark-suite.md)
-10. [Multi-objective evaluation](docs/multi-objective-evaluation.md)
-11. [Parameter sensitivity analysis](docs/sensitivity-analysis.md)
-12. [Trace diagnostics](docs/trace-diagnostics.md)
-13. [Diagnosis-driven repair loop](docs/diagnosis-repair-loop.md)
-14. [Multi-repair selection](docs/multi-repair-selection.md)
-15. [Stochastic robustness experiment](docs/stochastic-robustness.md)
-16. [Trace difference analysis](docs/trace-diff-analysis.md)
-17. [Artifact replay and comparison](docs/replay.md)
-18. [External HTTP model adapter](docs/external-model-adapter.md)
-19. [Controlled local tool adapter](docs/local-tool-adapter.md)
-20. [Semantic regression gate](docs/regression-gate.md)
-21. [Architecture](docs/architecture.md)
-22. [Metrics](docs/metrics.md)
-23. [Theory notes](theory/)
+### Trace preview
+
+Every round makes its evidence explicit. A typical deterministic run has this
+shape:
+
+```text
+OBSERVE value=0, goal=3
+DECIDE increment(amount=1)
+ACT success=True, value=1
+EVALUATE score=0.33
+FEEDBACK continue
+...
+STOP status=SUCCEEDED, reason="Evaluation reported success"
+```
+
+The saved artifact contains the ordered events, final state, and metrics, so it
+can be inspected without executing actions again.
+
+## Advanced study
+
+After the beginner route, use the [experiment catalogue](docs/experiments.md)
+to choose one focused extension at a time:
+
+- Feedback, memory, convergence, and failure behavior:
+  [feedback strategies](docs/feedback-strategies.md),
+  [memory capacity](docs/memory-capacity.md), and
+  [convergence and stopping](docs/convergence-stopping.md).
+- Evaluation and diagnosis: [benchmark suite](docs/benchmark-suite.md),
+  [trace diagnostics](docs/trace-diagnostics.md), and
+  [artifact replay](docs/replay.md).
+- Explicit integration boundaries: [external HTTP models](docs/external-model-adapter.md)
+  and [controlled local tools](docs/local-tool-adapter.md).
+- Reference material: [architecture](docs/architecture.md),
+  [metrics](docs/metrics.md), and [theory notes](theory/).
 
 ## Development
 
@@ -88,6 +108,9 @@ semantic gate that uploads `semantic-gate-evidence` for diagnosis.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request. CI runs
 the same test and wheel-build checks on supported Python versions.
+
+Use the [release checklist](docs/release-checklist.md) when preparing a public
+GitHub release.
 
 ## Scope
 

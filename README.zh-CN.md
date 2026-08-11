@@ -1,5 +1,7 @@
 # Loop Engineering Study
 
+> 详细学习材料以中文为主；英文项目概览见 [README.md](README.md)。
+
 [受控本地工具适配层](docs/local-tool-adapter.md)：仅以显式白名单运行固定诊断命令，并把结果接入既有 Loop。
 
 [外部 HTTP 模型适配层](docs/external-model-adapter.md)：以显式配置和严格 JSON 契约让模型生成 Decision，默认不发网络请求。
