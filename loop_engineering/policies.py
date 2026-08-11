@@ -14,7 +14,7 @@ class Decision:
     """An action selected by a policy and its numeric parameters."""
 
     name: str
-    parameters: dict[str, float]
+    parameters: dict[str, object]
 
 
 class Policy(ABC):

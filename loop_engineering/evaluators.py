@@ -16,7 +16,7 @@ class Evaluation:
     score: float
     success: bool
     message: str
-    signals: dict[str, float]
+    signals: dict[str, object]
 
 
 class Evaluator(ABC):
