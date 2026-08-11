@@ -9,7 +9,13 @@ the release decision without creating a tag or GitHub Release automatically.
 - [ ] Run `python -m pytest -q`.
 - [ ] Run `python -m build --wheel`.
 - [ ] Run `python scripts/check_docs.py`.
-- [ ] Run the CLI beginner example and the three baseline experiments.
+- [ ] Run the 45-minute course experiments:
+  `python experiments/code_repair/baseline.py`,
+  `python experiments/code_repair/evaluator_signal.py`,
+  `python experiments/code_repair/feedback_strategy.py`, and
+  `python experiments/code_repair/stopping_policy.py`.
+- [ ] Compare the baseline and feedback Artifacts with
+  `python -m loop_engineering.cli compare .loop/runs/code-repair/baseline.json .loop/runs/code-repair/feedback_strategy.json`.
 - [ ] Confirm no generated `.loop/` artifacts, coverage data, credentials, or
   local environments are staged.
 

@@ -87,3 +87,25 @@ def test_experiment_package_import_does_not_change_sys_path() -> None:
     )
 
     assert result.returncode == 0, result.stdout + result.stderr
+
+
+@pytest.mark.parametrize(
+    "module_name",
+    [
+        "experiments.code_repair.baseline",
+        "experiments.code_repair.evaluator_signal",
+        "experiments.code_repair.feedback_strategy",
+        "experiments.code_repair.stopping_policy",
+    ],
+)
+def test_code_repair_course_experiments_emit_a_complete_loop_trace(
+    module_name: str,
+) -> None:
+    trace = import_module(module_name).run()
+
+    assert trace.final_state is not None
+    phases = [event.phase for event in trace.events]
+    assert "DECIDE" in phases
+    assert "ACT" in phases
+    assert "EVALUATE" in phases
+    assert phases[-1] == "STOP"
